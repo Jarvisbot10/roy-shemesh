@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roy Shemesh — DJ & Producer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --neon: #00f0ff;
+      --neon2: #bf00ff;
+      --gold: #ffcc00;
+      --bg: #04060f;
+      --bg2: #080c1a;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(0,240,255,0.15);
+      --text: #cce8ef;
+      --muted: #4a6a72;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── PARTICLES BG ── */
+    #particles {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(0,240,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(191,0,255,0.07) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(0,240,255,0.03) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(0,240,255,0.03) 60px);
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0, 0 0; }
+      100% { background-position: 0 60px, 60px 0; }
+    }
+
+    .avatar-ring {
+      position: relative; width: 180px; height: 180px; margin-bottom: 32px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .avatar-ring::before, .avatar-ring::after {
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      border: 2px solid transparent;
+      animation: spin 4s linear infinite;
+    }
+
+    .avatar-ring::before {
+      border-top-color: var(--neon);
+      border-right-color: var(--neon);
+      box-shadow: 0 0 20px var(--neon);
+    }
+
+    .avatar-ring::after {
+      border-bottom-color: var(--neon2);
+      border-left-color: var(--neon2);
+      animation-direction: reverse;
+      animation-duration: 3s;
+      inset: -12px;
+      box-shadow: 0 0 30px var(--neon2);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .avatar-inner {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: linear-gradient(135deg, #0a1628, #1a0a2e);
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 56px; font-weight: 900;
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      overflow: hidden;
+    }
+
+    .avatar-inner img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px; letter-spacing: 6px; color: var(--neon);
+      text-transform: uppercase; margin-bottom: 12px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(42px, 10vw, 96px);
+      font-weight: 900;
+      line-height: 0.9;
+      background: linear-gradient(135deg, #fff 0%, var(--neon) 40%, var(--neon2) 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-shadow: none;
+      filter: drop-shadow(0 0 30px rgba(0,240,255,0.4));
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(14px, 3vw, 20px);
+      font-weight: 400;
+      letter-spacing: 8px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-desc {
+      max-width: 580px;
+      font-size: 16px; line-height: 1.7; color: #8ab8c5;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 50px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-decoration: none; text-transform: uppercase;
+      transition: all 0.3s ease; cursor: pointer; border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      color: #000;
+      box-shadow: 0 0 30px rgba(0,240,255,0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,240,255,0.7);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--neon);
+      box-shadow: inset 0 0 20px rgba(0,240,255,0.05);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--neon);
+      background: rgba(0,240,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      flex: 1; min-width: 160px;
+      padding: 28px 24px; text-align: center;
+      background: var(--bg2);
+      transition: background 0.3s;
+    }
+
+    .stat-item:hover { background: rgba(0,240,255,0.04); }
+
+    .stat-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 32px; font-weight: 900;
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 10px; letter-spacing: 3px; color: var(--muted);
+      text-transform: uppercase; margin-top: 4px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative; z-index: 1;
+      padding: 100px 20px;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px; letter-spacing: 5px; color: var(--neon);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+    }
+
+    @media(max-width:768px){ .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p {
+      font-size: 16px; line-height: 1.9; color: #7ab0bb;
+      margin-bottom: 20px;
+    }
+
+    .about-tags {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
+    }
+
+    .tag {
+      padding: 6px 16px; border-radius: 50px;
+      border: 1px solid var(--border);
+      font-size: 11px; letter-spacing: 2px; color: var(--neon);
+      background: rgba(0,240,255,0.04);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .about-visual {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .spec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .spec-row-label { font-size: 11px; letter-spacing: 2px; color: var(--muted); }
+    .spec-row-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px; color: var(--neon);
+    }
+
+    /* ── YOUTUBE ── */
+    .video-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .video-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .video-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,240,255,0.15);
+    }
+
+    .video-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0a1628, #1a0a2e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; position: relative; overflow: hidden;
+    }
+
+    .video-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .play-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .video-card:hover .play-overlay { opacity: 1; }
+
+    .play-btn-circle {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(0,240,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .video-info { padding: 16px; }
+    .video-title {
+      font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 6px;
+    }
+    .video-meta { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+    /* ── SOCIAL LINKS ── */
+    .social-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .social-card {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      padding: 32px 20px; border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .social-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--neon);
+      box-shadow: 0 10px 40px rgba(0,240,255,0.15);
+      background: rgba(0,240,255,0.06);
+    }
+
+    .social-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+
+    .social-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px; letter-spacing: 2px; color: #fff;
+    }
+
+    .social-handle { font-size: 12px; color: var(--muted); }
+
+    /* ── BOOKING ── */
+    .booking-card {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 60px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.04), rgba(191,0,255,0.04));
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .booking-card::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent 0%, rgba(0,240,255,0.05) 25%, transparent 50%, rgba(191,0,255,0.05) 75%, transparent 100%);
+      animation: rotate 10s linear infinite;
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .booking-card > * { position: relative; z-index: 1; }
+
+    .booking-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 900; color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .booking-sub { font-size: 16px; color: #7ab0bb; margin-bottom: 40px; }
+
+    .booking-email {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px; color: var(--neon);
+      text-decoration: none;
+      padding: 16px 32px; border-radius: 50px;
+      border: 1px solid var(--neon);
+      background: rgba(0,240,255,0.08);
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .booking-email:hover {
+      background: rgba(0,240,255,0.15);
+      box-shadow: 0 0 40px rgba(0,240,255,0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 20px; text-align: center;
+      font-size: 12px; color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 40px;
+      background: rgba(4,6,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px; font-weight: 900;
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px; letter-spacing: 2px; color: var(--muted);
+      text-decoration: none; text-transform: uppercase;
+      font-family: 'Orbitron', sans-serif;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--neon); }
+
+    @media(max-width:600px){
+      .nav-links { display: none; }
+      nav { padding: 16px 20px; }
+      .booking-card { padding: 40px 24px; }
+    }
+
+    /* ── WAVEFORM DECO ── */
+    .waveform {
+      display: flex; align-items: center; gap: 3px;
+      height: 40px; margin: 0 auto 40px;
+    }
+
+    .wave-bar {
+      width: 4px; border-radius: 2px;
+      background: linear-gradient(to top, var(--neon2), var(--neon));
+      animation: wave 1.2s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+      0%,100% { transform: scaleY(0.3); opacity: 0.4; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ROY SHEMESH</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#social">Social</a></li>
+    <li><a href="#booking">Booking</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar-ring">
+    <div class="avatar-inner">RS</div>
+  </div>
+  <div class="hero-eyebrow">▶ DJ &amp; PRODUCER</div>
+  <h1 class="hero-name">ROY<br>SHEMESH</h1>
+  <div class="hero-title">Electronic Music · DJ · Producer</div>
+  <p class="hero-desc">
+    Crafting immersive electronic soundscapes, Roy Shemesh moves dance floors 
+    with precision and passion. From intimate club sets to festival stages — 
+    pure energy, pure music.
+  </p>
+
+  <!-- Waveform -->
+  <div class="waveform">
+    <div class="wave-bar" style="height:40%;animation-delay:0s"></div>
+    <div class="wave-bar" style="height:70%;animation-delay:0.1s"></div>
+    <div class="wave-bar" style="height:90%;animation-delay:0.2s"></div>
+    <div class="wave-bar" style="height:60%;animation-delay:0.3s"></div>
+    <div class="wave-bar" style="height:100%;animation-delay:0.4s"></div>
+    <div class="wave-bar" style="height:80%;animation-delay:0.5s"></div>
+    <div class="wave-bar" style="height:50%;animation-delay:0.6s"></div>
+    <div class="wave-bar" style="height:100%;animation-delay:0.7s"></div>
+    <div class="wave-bar" style="height:70%;animation-delay:0.8s"></div>
+    <div class="wave-bar" style="height:40%;animation-delay:0.9s"></div>
+    <div class="wave-bar" style="height:85%;animation-delay:1.0s"></div>
+    <div class="wave-bar" style="height:60%;animation-delay:1.1s"></div>
+  </div>
+
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://www.youtube.com/@royshemesh" target="_blank">
+      <i data-lucide="youtube" width="16" height="16"></i> Watch on YouTube
+    </a>
+    <a class="btn btn-outline" href="#booking">Book Roy</a>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">21.7K</div>
+    <div class="stat-label">Facebook Fans</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2.5K</div>
+    <div class="stat-label">Instagram Followers</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5+</div>
+    <div class="stat-label">Platforms</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">BPM in His Veins</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// WHO IS HE</div>
+  <h2 class="section-title">The Artist</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Roy Shemesh is a DJ and producer whose sets are defined by energy, 
+        precision, and an instinctive read of the crowd. Whether behind the 
+        decks at an intimate underground club or commanding a festival stage, 
+        his sets are a journey through sound.
+      </p>
+      <p>
+        With a presence across YouTube, SoundCloud, Mixcloud, Instagram, 
+        and Facebook, Roy has built a dedicated community of fans who follow 
+        his music wherever it goes.
+      </p>
+      <div class="about-tags">
+        <span class="tag">DJ</span>
+        <span class="tag">Producer</span>
+        <span class="tag">Electronic</span>
+        <span class="tag">Club</span>
+        <span class="tag">Festival</span>
+        <span class="tag">Israel</span>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="spec-row">
+        <span class="spec-row-label">ROLE</span>
+        <span class="spec-row-value">DJ &amp; Producer</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-row-label">ORIGIN</span>
+        <span class="spec-row-value">Israel</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-row-label">STYLE</span>
+        <span class="spec-row-value">Electronic</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-row-label">FACEBOOK</span>
+        <span class="spec-row-value">21,694 LIKES</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-row-label">BOOKING</span>
+        <span class="spec-row-value">AVAILABLE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC / YOUTUBE -->
+<section id="music" style="background: linear-gradient(180deg, transparent, rgba(0,240,255,0.02), transparent); max-width:100%; padding-left:40px; padding-right:40px;">
+  <div style="max-width:1100px; margin:0 auto;">
+  <div class="section-label">// MUSIC &amp; MIXES</div>
+  <h2 class="section-title">Listen &amp; Watch</h2>
+  <div class="video-grid">
+
+    <a class="video-card" href="https://www.youtube.com/@royshemesh" target="_blank">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#0d1f3c,#1a0d3a);">
+        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+             onerror="this.style.display='none'"
+             alt="YouTube"/>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;">🎛️</div>
+        <div class="play-overlay">
+          <div class="play-btn-circle">
+            <i data-lucide="play" width="24" height="24" color="#000"></i>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Latest DJ Sets — YouTube</div>
+        <div class="video-meta">YOUTUBE · @ROYSHEMESH</div>
+      </div>
+    </a>
+
+    <a class="video-card" href="https://soundcloud.com/royshemesh" target="_blank">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#1a0a00,#3d1a00);">
+        <div style="font-size:64px;position:relative;z-index:1;">🎵</div>
+        <div class="play-overlay">
+          <div class="play-btn-circle">
+            <i data-lucide="play" width="24" height="24" color="#000"></i>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Tracks &amp; Originals — SoundCloud</div>
+        <div class="video-meta">SOUNDCLOUD · ROYSHEMESH</div>
+      </div>
+    </a>
+
+    <a class="video-card" href="https://www.mixcloud.com/royshemesh/" target="_blank">
+      <div class="video-thumb" style="background:linear-gradient(135deg,#0d0d2e,#1a0d3a);">
+        <div style="font-size:64px;position:relative;z-index:1;">🎚️</div>
+        <div class="play-overlay">
+          <div class="play-btn-circle">
+            <i data-lucide="play" width="24" height="24" color="#000"></i>
+          </div>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">DJ Mixes — Mixcloud</div>
+        <div class="video-meta">MIXCLOUD · ROYSHEMESH</div>
+      </div>
+    </a>
+
+  </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="section-label">// CONNECT</div>
+  <h2 class="section-title">Follow Roy</h2>
+  <div class="social-grid">
+
+    <a class="social-card" href="https://www.youtube.com/@royshemesh" target="_blank">
+      <div class="social-icon" style="background:rgba(255,0,0,0.15);">
+        <i data-lucide="youtube" width="28" height="28" color="#ff4444"></i>
+      </div>
+      <div class="social-name">YouTube</div>
+      <div class="social-handle">@royshemesh</div>
+    </a>
+
+    <a class="social-card" href="https://www.instagram.com/royshemesh/" target="_blank">
+      <div class="social-icon" style="background:rgba(191,0,255,0.15);">
+        <i data-lucide="instagram" width="28" height="28" color="#bf00ff"></i>
+      </div>
+      <div class="social-name">Instagram</div>
+      <div class="social-handle">@royshemesh · 2.5K</div>
+    </a>
+
+    <a class="social-card" href="https://www.facebook.com/royshemeshofficial" target="_blank">
+      <div class="social-icon" style="background:rgba(0,120,255,0.15);">
+        <i data-lucide="facebook" width="28" height="28" color="#4488ff"></i>
+      </div>
+      <div class="social-name">Facebook</div>
+      <div class="social-handle">21.7K Likes</div>
+    </a>
+
+    <a class="social-card" href="https://soundcloud.com/royshemesh" target="_blank">
+      <div class="social-icon" style="background:rgba(255,80,0,0.15);">
+        <i data-lucide="music" width="28" height="28" color="#ff5500"></i>
+      </div>
+      <div class="social-name">SoundCloud</div>
+      <div class="social-handle">royshemesh</div>
+    </a>
+
+    <a class="social-card" href="https://www.mixcloud.com/royshemesh/" target="_blank">
+      <div class="social-icon" style="background:rgba(0,174,239,0.15);">
+        <i data-lucide="radio" width="28" height="28" color="#00aaee"></i>
+      </div>
+      <div class="social-name">Mixcloud</div>
+      <div class="social-handle">royshemesh</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" style="max-width:900px;">
+  <div class="booking-card">
+    <div class="section-label">// BOOK THE DJ</div>
+    <div class="booking-title">Ready to Book Roy?</div>
+    <p class="booking-sub">
+      Clubs, festivals, private events, corporate gigs — get in touch directly 
+      for availability, riders, and set details.
+    </p>
+    <a class="booking-email" href="mailto:royshemesh.music@gmail.com">
+      <i data-lucide="mail" width="18" height="18"></i>
+      royshemesh.music@gmail.com
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 ROY SHEMESH — DJ &amp; PRODUCER &nbsp;·&nbsp; FAN PAGE &nbsp;·&nbsp; ALL RIGHTS RESERVED</p>
+</footer>
+
+<script>
+  // Init Lucide icons
+  lucide.createIcons();
+</script>
+</body>
+</html>
